@@ -13,7 +13,7 @@ let articulosCarrito = [];
 
 cargarEventListeners();
 function cargarEventListeners(){
-     // Cuando agregas un curso presionando  "Agregar al carrito"
+     // Agregar curso 
      listaCursos.addEventListener('click',agregarCurso);
 
      // Elimina cursos del carrito
@@ -23,7 +23,11 @@ function cargarEventListeners(){
      vaciarCarritoBtn.addEventListener('click',()=>{
           articulosCarrito=[] // Reseteamos el arreglo
           limpiarHTML();  // Eliminamos todo el HTML 
-     })
+     });
+     document.addEventListener('DOMContentLoaded',() =>{
+          articulosCarrito = JSON.parse(window.localStorage.getItem('carrito')) || [];
+          carritoHTML();
+     });
 }
 
 
@@ -121,8 +125,14 @@ function carritoHTML(){
           
           // Agrega el HTML del carrito en el Tbody
           contenedorCarrito.appendChild(row);
-     })
+     });
+     sincronizarStorage();
 }
+
+function sincronizarStorage(){
+     window.localStorage.setItem('carrito',JSON.stringify(articulosCarrito));
+}
+   
 
 
 // Elimina los cursos del tbody
